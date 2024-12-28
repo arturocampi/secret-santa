@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         "Ya aprenderás pequeño",
     ];
 
+    let emailsSentState = true;
+
     document.getElementById('addParticipantBtn').addEventListener('click', () => {
         const name = document.getElementById('participantName').value.trim();
         const email = document.getElementById('participantEmail').value.trim();
@@ -69,16 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
             receiver_email: receiver.email,
             custom_phrase: customPhrase,
         };
-        console.log(emailParams);
-        
-        // emailjs.send('service_hyeo70q', 'template_tikoa85', emailParams)
-        //     .then(() => {
-        //         console.log(`Email sent to ${receiver.email}`);
-        //     })
-        //     .catch(error => {
-        //         console.error(`Failed to send email to ${receiver.email}:`, error);
-        //     });
+
+        emailjs.send('service_hyeo70q', 'template_tikoa85', emailParams)
+            .then(() => {
+                console.log(`Email sent to ${receiver.email}`);
+            })
+            .catch(error => {
+                emailsSentState = false;
+                console.error(`Failed to send email to ${receiver.email}:`, error);
+            });
+
     }
+
+    // Check if the mails have been sent
+    state ? alert("Correos enviados correctamente.") : alert("Los correos no se han enviado.");
 
     // Edit Participant (dummy function to wire up edit buttons)
     window.editParticipant = function (index) {
